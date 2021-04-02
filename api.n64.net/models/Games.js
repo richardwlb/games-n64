@@ -1,20 +1,25 @@
+// const { json } = require('express');
 const { Schema, model } = require('mongoose');
+const connect = require('./index');
 
-const GameSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
+connect();
+
+const GameSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    otherTitles: [String],
+    developers: [String],
+    publishers: [String],
+    genrers: [String],
+    firstReleased: Date,
+    japanRelease: Date,
+    euroRelease: Date,
+    usaRelease: Date,
   },
-  otherTitles: [String],
-  developers: [String],
-  publishers: [String],
-  genrers: [String],
-  firstReleased: Date,
-  japanRelease: Date,
-  euroRelease: Date,
-  usaRelease: Date,
-}, 
-  {collection: 'games', strict: false}
+  { collection: 'games', strict: false }
 );
 
 const Game = model('Game', GameSchema);
@@ -27,18 +32,31 @@ module.exports = {
     const query = Game.find();
     if (q) {
       const regex = new RegExp(`.*${q}.*`, 'i');
-      const searchQuery = { $or: [
-        {title: regex}, 
-        {otherTitles: regex}, 
-        {publishers: regex}, 
-        {developers: regex},
-      ]};
-      query.find(searchQuery)
-    };
+      const searchQuery = {
+        $or: [
+          { title: regex },
+          { otherTitles: regex },
+          { publishers: regex },
+          { developers: regex },
+        ],
+      };
+      query.find(searchQuery);
+    }
     if (limit) query.limit(limit);
     if (page) query.skip(skip);
     if (fields) query.select(fields.split(','));
     if (orderBy) query.sort({ [orderBy]: sortBy });
+    query.maxTimeMS(50000);
     return query.exec();
+  },
+  store: (data) => {
+    const game = new Game(data);
+    return game.save();
+  },
+  update: (id, data, options = { new: true }) => {
+    return Game.findOneAndUpdate({ _id: id }, data, options);
+  },
+  destroy: (id) => {
+    return Game.deleteOne({ _id: id });
   },
 };
