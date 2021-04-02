@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -7,13 +8,14 @@ const connect = require('../models/index');
 const gamesRouter = require('../routes/games');
 
 const app = express();
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+
 connect();
 
 app.get('/', (req, res) => {
-  return res.json({message: "Raiz"});
+  return res.json({ message: 'Raiz' });
 });
 
 app.use('/games', gamesRouter);
@@ -21,4 +23,3 @@ app.use('/games', gamesRouter);
 app.listen(3000, () => {
   console.log('Api runnig on port 3000');
 });
-

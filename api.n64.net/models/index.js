@@ -1,14 +1,12 @@
-const {connect} = require('mongoose');
-const MONGO_URL = process.env.DATABASE;
+const { connect } = require('mongoose');
+const MONGODB_URL = process.env.DATABASE;
 
-const connectToDB = () => {
+module.exports = () => {
   const options = {
+    useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useNewUrlParser: true, 
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   };
-  return connect(MONGO_URL, options);
+  return connect(MONGODB_URL, options);
 };
-
-module.exports = connectToDB;
