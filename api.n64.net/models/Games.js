@@ -1,8 +1,5 @@
 // const { json } = require('express');
 const { Schema, model } = require('mongoose');
-const connect = require('./index');
-
-connect();
 
 const GameSchema = new Schema(
   {

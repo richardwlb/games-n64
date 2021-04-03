@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const connect = require('../models/index');
+const connect = require('../services/connect');
 const gamesRouter = require('../routes/games');
 
 const app = express();
@@ -13,10 +13,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 connect();
-
-app.get('/', (req, res) => {
-  return res.json({ message: 'Raiz' });
-});
 
 app.use('/games', gamesRouter);
 
