@@ -56,4 +56,7 @@ module.exports = {
   destroy: (id) => {
     return Game.deleteOne({ _id: id });
   },
+  total: () => {
+    return Game.countDocuments();
+  }
 };

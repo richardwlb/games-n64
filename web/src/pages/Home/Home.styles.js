@@ -10,7 +10,16 @@ const useStyles = makeStyles({
   },
   inputSearch: {
     width: '50%',
-  }
+  },
+  // footer: {
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   width: '90%',
+  // },
+  containerFooter: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 export default useStyles;

@@ -17,6 +17,11 @@ const show = async (req, res) => {
   return res.json(result);
 };
 
+const totalPages = async (req, res) => {
+  const result = await Games.total();
+  return res.json({result});
+}
+
 const create = async (req, res) => {
   const { body } = req;
   const result = await Games.store(body);
@@ -36,4 +41,4 @@ const destroy = async (req, res) => {
   return res.json(result);
 };
 
-module.exports = { show, create, update, destroy };
+module.exports = { show, create, update, destroy, totalPages };
